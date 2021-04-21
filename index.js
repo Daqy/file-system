@@ -6,9 +6,9 @@ const bodyParser = require("body-parser")
 const cors = require('cors');
 
 app.use(bodyParser.raw({type:"application/octet-stream", limit: "200mb"}));
-const port = 5000;
+const port = 3000;
 
-app.use(cors({origin: 'http://localhost:3000'}));
+app.use(cors({origin: 'https://daqy.dev/'}));
 
 app.post("/folder", async function(req, res) {
   const name = req.query.name;
