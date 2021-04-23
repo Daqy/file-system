@@ -4,6 +4,12 @@ const http = require("http").createServer(app);
 const {fromFS} = require("./FS-endpoints");
 const bodyParser = require("body-parser")
 const cors = require('cors');
+const privateKey  = fs.readFileSync('server.key', 'utf8');
+const certificate = fs.readFileSync('server.crt', 'utf8');
+
+const credentials = {key: privateKey, cert: certificate};
+
+const https = require('https').createServer(credentials, app);
 
 app.use(bodyParser.raw({type:"application/octet-stream", limit: "200mb"}));
 const port = 3000;
@@ -75,6 +81,10 @@ app.delete("/folder/:foldername", async function(req, res) {
 
 http.listen(port, () => {
   console.log(`listening on *:${port}`);
+});
+
+https.listen(443, () => {
+  console.log(`listening on *:${443}`);
 });
 
 function getHeader(extension, length) {
