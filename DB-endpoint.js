@@ -14,7 +14,6 @@ const endpoints = {
     });
 
     client.end();
-    console.log(queryResult.rows)
     return queryResult.rows;
   },
   async queryAllFiles() {

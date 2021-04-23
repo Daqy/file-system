@@ -2,6 +2,7 @@
 node_modules
 /dist
 /root/*
+database.json
 
 
 # local env files
