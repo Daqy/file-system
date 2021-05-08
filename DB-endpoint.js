@@ -51,8 +51,7 @@ const endpoints = {
     client.connect();
 
     const queryResult = await new Promise((resolve, reject) => {
-      console.log("---", filename)
-      client.query(`SELECT * FROM folders where name='${filename}}'`, (err, res) => {
+      client.query(`SELECT * FROM folders where name='${"root"}}'`, (err, res) => {
         if (err) throw err;
         resolve(res);
       });
