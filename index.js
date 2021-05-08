@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
+const fs = require("fs");
 const {fromFS} = require("./FS-endpoints");
 const bodyParser = require("body-parser")
 const cors = require('cors');
