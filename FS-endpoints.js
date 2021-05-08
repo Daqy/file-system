@@ -71,6 +71,7 @@ const endpoints = {
   async getFolder(foldername) {
     foldername = foldername.split('/');
     foldername = foldername[foldername.length-1]
+    console.log(foldername);
 
     if (foldername == "") {
       foldername = 'root'
