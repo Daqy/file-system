@@ -46,6 +46,7 @@ const endpoints = {
   },
   async queryFolderByName(filename) {
     const client = new Client(config);
+    console.log(filename)
     client.connect();
 
     const queryResult = await new Promise((resolve, reject) => {
