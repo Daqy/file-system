@@ -56,6 +56,7 @@ const endpoints = {
     });
 
     client.end();
+    console.log(queryResult.rows);
     return queryResult.rows[0];
   },
   async insertFile(fileID, filename, parentID) {
