@@ -37,8 +37,8 @@ app.get("/api/file", async function(req, res) {
   const filename = req.query.name;
   let path = req.query.path;
 
-  if (path == undefined || path == "/") {
-    path = "root";
+  if (path == undefined || path == '/') {
+    path = 'root';
   };
 
   const extension = filename.split(".")[1];
@@ -52,8 +52,8 @@ app.get("/api/file", async function(req, res) {
 
 app.get("/api/folder", async function(req, res) {
   let foldername = req.query.name;
-  if (foldername === undefined || foldername == "") {
-    foldername = "root"
+  if (foldername === undefined || foldername == '') {
+    foldername = 'root'
   }
 
   console.log(foldername)
@@ -67,8 +67,8 @@ app.delete("/file/:filename", async function(req, res) {
   const filename = req.params.filename;
   let path = req.query.path;
 
-  if (path == undefined || path == "/") {
-    path = "root";
+  if (path == undefined || path == '/') {
+    path = 'root';
   };
 
   const response = await fromFS().deleteFile(filename, path);

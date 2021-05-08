@@ -46,14 +46,10 @@ const endpoints = {
   },
   async queryFolderByName(filename) {
     const client = new Client(config);
-    console.log(client);
-    console.log(filename)
     client.connect();
 
     const queryResult = await new Promise((resolve, reject) => {
-      filename = 'root'
       const query = `SELECT * FROM folders where name='${filename}'`
-      console.log(query);
       client.query(query, (err, res) => {
         if (err) throw err;
         resolve(res);
@@ -61,7 +57,6 @@ const endpoints = {
     });
 
     client.end();
-    console.log(queryResult.rows);
     return queryResult.rows[0];
   },
   async insertFile(fileID, filename, parentID) {

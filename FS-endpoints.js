@@ -1,32 +1,32 @@
-const fs = require("fs");
+const fs = require('fs');
 const SnowflakeId = require('snowflake-id').default;
-const { fromDB } = require("./DB-endpoint");
-// const { fromJSON } = require("./JSON-endpoints");
+const { fromDB } = require('./DB-endpoint');
+// const { fromJSON } = require('./JSON-endpoints');
 
 const snowflake = new SnowflakeId({
   offset : (2020-1970)*31536000*1000
 });
 
-const directory = "root/" 
+const directory = 'root/' 
 
 const endpoints = {
   async requestUploadFile(filename, fileDirectory, binaryData) {
 
     if (binaryData.length <= 0) {
-      return "file failed to upload";
+      return 'file failed to upload';
     }
 
-    fileDirectory = fileDirectory.split("/");
+    fileDirectory = fileDirectory.split('/');
     let foldername = fileDirectory[fileDirectory.length-1];
-    if (foldername == "") {
-      foldername = "root"
+    if (foldername == '') {
+      foldername = 'root'
     };
 
     const result = await fromDB().queryFolderByName(foldername);
 
     if (result != undefined) {
       const ID = snowflake.generate();
-      fs.writeFile(`${directory+ID}.${(filename.split(".")[1])}`, binaryData, function (err) {
+      fs.writeFile(`${directory+ID}.${(filename.split('.')[1])}`, binaryData, function (err) {
         if (err) throw err;
       });
 
@@ -38,10 +38,9 @@ const endpoints = {
   },
   async requestUploadFolder(foldername, folderDirectory) {
     const queryResult = await fromDB().queryFolderByName(foldername);
-    console.log(queryResult)
     if (queryResult != undefined) {return "failed to upload folder";}
 
-    folderDirectory = folderDirectory.split("/").slice(1);
+    folderDirectory = folderDirectory.split('/').slice(1);
     const doesfolderPathExist = await folderPathExist(folderDirectory);
     if (doesfolderPathExist) {
       const parentID = (await fromDB().queryFolderByName(folderDirectory[folderDirectory.length-1])).ID;
@@ -54,13 +53,13 @@ const endpoints = {
     return "failed to upload folder"
   },
   async getFile(filename, folderDirectory) {
-    const foldername = folderDirectory.split("/");
+    const foldername = folderDirectory.split('/');
     const queryResultFolder = await fromDB().queryFolderByName(foldername[foldername.length-1]);
-    if (queryResultFolder == undefined) {return "failed to find folder";}
+    if (queryResultFolder == undefined) {return 'failed to find folder';}
     const queryResult = await fromDB().queryFileByName(filename, queryResultFolder.ID);
 
     const fileData = await new Promise((resolve, reject) => {
-      fs.readFile(`${directory+queryResult.ID}.${(filename.split(".")[1])}`, function(err, data) {
+      fs.readFile(`${directory+queryResult.ID}.${(filename.split('.')[1])}`, function(err, data) {
         if (err) throw err;
         resolve(data);
       });
@@ -70,28 +69,27 @@ const endpoints = {
     return file;
   },
   async getFolder(foldername) {
-    foldername = foldername.split("/");
+    foldername = foldername.split('/');
     foldername = foldername[foldername.length-1]
 
-    if (foldername == "") {
-      foldername = "root"
+    if (foldername == '') {
+      foldername = 'root'
     };
 
     const folder = await fromDB().queryFolderByName(foldername);
-    console.log(folder);
     const data = await getFolderInformation(folder);
 
     return data;
   },
   async deleteFile(filename, folderDirectory) {
-    const foldername = folderDirectory.split("/");
+    const foldername = folderDirectory.split('/');
     const queryResultFolder = await fromDB().queryFolderByName(foldername[foldername.length-1]);
-    if (queryResultFolder == undefined) {return "failed to find folder";}
+    if (queryResultFolder == undefined) {return 'failed to find folder';}
     const queryResult = await fromDB().queryFileByName(filename, queryResultFolder.ID);
     if (queryResult == undefined) {
       return "file doesn't exist"
     }
-    fs.unlink(`${directory+queryResult.ID}.${filename.split(".")[1]}`,function(err) {
+    fs.unlink(`${directory+queryResult.ID}.${filename.split('.')[1]}`,function(err) {
       if (err) throw err;
     })
     const response = await fromDB().deleteFile(queryResult.ID);
@@ -121,20 +119,18 @@ module.exports.fromFS = function() {
 
 async function folderPathExist(path) {
   for (let i = path.length-1; i >= 0; i--) {
-    if (path[i] == "") {
-      path[i] = "root";
+    if (path[i] == '') {
+      path[i] = 'root';
     }
     let folder = await fromDB().queryFolderByName(path[i]);
     if (folder == undefined) {return false;}
     if (i != path.length-1 && parentID != folder.ID) {return false;}
     let parentID = folder.parentID;
   }
-  console.log("returned true")
   return true;
 }
 
 async function getFolderInformation(folder) {
-  console.log(folder);
   const folders = await fromDB().queryFoldersByParentID(folder.ID);
   const files = await fromDB().queryFilesByParentID(folder.ID);
 
