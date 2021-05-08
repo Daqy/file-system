@@ -74,6 +74,7 @@ const endpoints = {
     foldername = foldername[foldername.length-1]
 
     const folder = await fromDB().queryFolderByName(foldername);
+    console.log(folder);
     const data = await getFolderInformation(folder);
 
     return data;
@@ -129,6 +130,7 @@ async function folderPathExist(path) {
 }
 
 async function getFolderInformation(folder) {
+  console.log(folder);
   const folders = await fromDB().queryFoldersByParentID(folder.ID);
   const files = await fromDB().queryFilesByParentID(folder.ID);
 
