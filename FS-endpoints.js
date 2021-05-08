@@ -73,6 +73,10 @@ const endpoints = {
     foldername = foldername.split("/");
     foldername = foldername[foldername.length-1]
 
+    if (foldername == "") {
+      foldername = "root"
+    };
+
     const folder = await fromDB().queryFolderByName(foldername);
     console.log(folder);
     const data = await getFolderInformation(folder);
