@@ -55,7 +55,7 @@ app.get("/api/folder", async function(req, res) {
   if (foldername === undefined || foldername == "") {
     foldername = 'root'
   }
-
+  foldername = 'root'
   const folderStructure = await fromFS().getFolder(foldername);
   
   res.send(folderStructure);
