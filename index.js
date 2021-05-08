@@ -84,8 +84,8 @@ http.listen(port, () => {
   console.log(`listening on *:${port}`);
 });
 
-https.listen(443, () => {
-  console.log(`listening on *:${443}`);
+https.listen(8443, () => {
+  console.log(`listening on *:${8443}`);
 });
 
 function getHeader(extension, length) {
