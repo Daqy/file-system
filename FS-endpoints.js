@@ -18,7 +18,7 @@ const endpoints = {
 
     fileDirectory = fileDirectory.split('/');
     let foldername = fileDirectory[fileDirectory.length-1];
-    if (foldername == '') {
+    if (foldername == "") {
       foldername = 'root'
     };
 
@@ -72,7 +72,7 @@ const endpoints = {
     foldername = foldername.split('/');
     foldername = foldername[foldername.length-1]
 
-    if (foldername == '') {
+    if (foldername == "") {
       foldername = 'root'
     };
 
@@ -119,7 +119,7 @@ module.exports.fromFS = function() {
 
 async function folderPathExist(path) {
   for (let i = path.length-1; i >= 0; i--) {
-    if (path[i] == '') {
+    if (path[i] == "") {
       path[i] = 'root';
     }
     let folder = await fromDB().queryFolderByName(path[i]);
