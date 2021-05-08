@@ -1,5 +1,5 @@
 const config = {
-  user: "root",
+  user: "postgres",
   host: "localhost",
   database: "file-system",
   port: 5432
