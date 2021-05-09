@@ -4,6 +4,8 @@ node_modules
 /root/*
 database.json
 
+!/root/info.txt
+
 
 # local env files
 .env.local
